@@ -1,0 +1,73 @@
+{\rtf1\ansi\ansicpg1252\cocoartf1671\cocoasubrtf600
+{\fonttbl\f0\fswiss\fcharset0 Helvetica;}
+{\colortbl;\red255\green255\blue255;}
+{\*\expandedcolortbl;;}
+\margl1440\margr1440\vieww13760\viewh15320\viewkind0
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+
+\f0\fs24 \cf0 \
+Ruby OO programming - everything in Ruby is an object. Classes in Ruby are blueprints for creating an object/an instance of that class. These objects that have been instantiated through the class have data (attributes, aka instance variables) and behaviors (methods). The fundamentals of OO programming is these objects represent real world objects\
+SQL - structured Query Language \'97language we use to talk to databases (its only \'93thing\'94), but you will need to master SQL because devs will be working with databases to manage data associated with our web applications\
+ORM - Object Relational Mapping \'97 technique of accessing a relational database using an OO programming language like Ruby. Instead of us writing all these queries to SQL directly, can create our own ORM to have it act as the \'93middleman\'94 (middlewoman?) between Ruby and our database. This cuts down on repetition \
+Active Record - a Ruby ORM gem that saves devs time with connecting our objects to the database, especially if there are a lot of classes involved. Active Record comes with access to its own methods \
+\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+\cf0 I\'92ve started my coding journey as a bootcamp student and felt accomplished after finishing off a long week of learning about object oriented programming and how these objects are a representation of real world objects. Mind blowing stuff, really. But as we progressed towards actually taking our Ruby objects to have them go off and live in a database, where we want the data persisted (still available after closing our application), SQL was introduced as the language to talk to our databases. \
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+\cf0 \
+\
+JOINs on JOINs on JOINs\
+#sql #codenewbie \
+\
+\
+Are you working on SQL queries and your brain is awhirl trying to figure out how to join multiple tables? Do you see the SQL keywords and table/column names as just a big blob of words? I can attest that when I learned SQL and started making my own queries trying to gather data across three or more tables, my mind looked as if Tasmanian Devil was spinning like a vortex.\
+\
+****GIF of Tasmanian Devil spinning\
+\
+As I am a visual learner, I decided to take pen to paper to sketch out the schema of my database and it was slowly starting to make sense, albeit a bit conspiracy theory looking.\
+\
+*****GIF of Charlie from Its Always Sunny\
+\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+\cf0 Having my schema sketched out with the column names/attributes below each table helped me visualize where my joins needed to take place. The first step is to draw out all of the tables with the column names under.\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+\cf0 \
+***Chart/Model without any lines**********\
+\
+Then, draw out the connections between your tables, indicating the type of relationship between your tables. In my example, a player has many games_players (the join table) and a games_players belongs to a player. Each line will represent one join in your SQL query. \
+\
+***Chart?model with one line*****\
+\
+Now we can construct our SQL query. It\'92s helpful to keep in mind what our end result should be. In this case, I want a table with the names of the players and the number of games they played in. Since the player\'92s names are in the players table, I will start from the players table. Then we can make our first join to the games_players table on the id columns:\
+\
+**Code snippet\
+SELECT players.name, COUNT(games.id) AS game_count\
+FROM players \
+INNER JOIN games_players ON players.id = games_players.players_id\
+\
+As we still need to connect to the games table, we know there is one more join to be made.\
+\
+**chart model with 2 lines***\
+\
+Now we can get games in on the party as well, and have the join happen on the ids columns as well:\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+\cf0 **Code snippet\
+SELECT players.name, COUNT(games.id) AS game_count\
+FROM players \
+INNER JOIN games_players ON players.id = games_players.players_id\
+INNER JOIN games ON games.id = games_players.players_id\
+\
+Finally, we will want to GROUP BY players.names because we want the resulting dataset to be a list of the players.\
+**Code snippet\
+SELECT players.name, COUNT(games.id) AS game_count\
+FROM players \
+INNER JOIN games_players ON players.id = games_players.players_id\
+INNER JOIN games ON games.id = games_players.players_id\
+GROUP BY players.name\
+\
+And that\'92s it! We should get two snazzy columns with our players and the count of their games. If there\'92s one big takeaway from my post, it\'92s that for every x tables you need to join, you will need (x-1) join clauses. Also, do what you have to do to understand the material, even if your whiteboard or notebook starts to look like scribbles and nonsense. \
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+\cf0 \
+\
+\
+}
